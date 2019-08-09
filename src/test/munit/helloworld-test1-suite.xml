@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<munit:config name="helloworld-test2-suite.xml" />
+	
+	<import file="helloworld-test2-suite.xml" />
+	<munit:test name="helloworld-test1-suite-get:\helloworld1:helloworld-configTest" description="Test" doc:id="8494ecfe-6659-434b-814e-b7090ae0e6c7">
+		<munit:enable-flow-sources>
+			<munit:enable-flow-source value="helloworld-main" />
+			<munit:enable-flow-source value="get:\helloworld:helloworld-config" />
+		
+		</munit:enable-flow-sources>
+		<munit:execution >
+			<http:request method="GET" doc:name="Request" doc:id="f6cad339-afbf-462e-9940-d4c3674e30af" config-ref="HTTP_Request_configuration" path="api/helloworld">
+				<http:headers ><![CDATA[#[output application/java
+---
+{
+	"Accept" : "*/*"
+}]]]></http:headers>
+			</http:request>
+		</munit:execution>
+		<munit:validation >
+			<logger level="INFO" doc:name="Logger" doc:id="0e3f6e62-bf4d-4ecb-a031-0f0d4d9e3e48" />
+		</munit:validation>
+	</munit:test>
+
+</mule>
